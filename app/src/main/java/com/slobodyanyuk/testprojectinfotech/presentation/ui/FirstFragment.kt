@@ -1,4 +1,4 @@
-package com.slobodyanyuk.testprojectinfotech
+package com.slobodyanyuk.testprojectinfotech.presentation.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.slobodyanyuk.testprojectinfotech.R
 import com.slobodyanyuk.testprojectinfotech.databinding.FragmentFirstBinding
 
 /**

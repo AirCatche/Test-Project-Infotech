@@ -1,4 +1,4 @@
-package com.slobodyanyuk.testprojectinfotech
+package com.slobodyanyuk.testprojectinfotech.presentation
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -9,9 +9,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import com.slobodyanyuk.testprojectinfotech.R
 import com.slobodyanyuk.testprojectinfotech.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class AppActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
