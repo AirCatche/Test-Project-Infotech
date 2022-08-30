@@ -7,8 +7,9 @@ object Versions {
 
     const val CORE_KTX = "1.7.0"
     const val NAVIGATION = "2.5.0"
-    const val APP_COMPAT = "1.3.1"
-    const val MATERIAL = "1.4.0"
+    const val APP_COMPAT = "1.4.2"
+    const val MATERIAL = "1.6.1"
+    const val CONSTRAINT_LAYOUT = "2.1.4"
     const val LIFECYCLE = "2.5.1"
     const val ROOM = "2.3.0"
     const val FRAGMENT_KTX = "1.4.1"
@@ -18,7 +19,7 @@ object Versions {
     const val RETROFIT = "2.9.0"
     const val RETROFIT_JSON = "0.8.0"
     const val DATASTORE = "1.0.0"
-    const val MOSHI = "1.12.0"
+    const val MOSHI = "1.13.0"
     const val MOSHI_CONVERTER = "2.4.0"
     const val GLIDE = "4.13.0"
 

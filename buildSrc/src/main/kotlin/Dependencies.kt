@@ -16,6 +16,8 @@ object Dependencies {
     object AndroidX {
 
         const val APP_COMPAT = "androidx.appcompat:appcompat:${Versions.APP_COMPAT}"
+        const val CONSTRAINT_LAYOUT =
+                "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
         const val DATASTORE_COMMON =
                 "androidx.datastore:datastore-preferences-core:${Versions.DATASTORE}"
         const val DATASTORE_ANDROID =
@@ -28,6 +30,8 @@ object Dependencies {
             const val CORE = "androidx.core:core-ktx:${Versions.CORE_KTX}"
             const val LIFECYCLE_ANNOTATIONS =
                     "androidx.lifecycle:lifecycle-common-java8:${Versions.LIFECYCLE}"
+            const val LIFECYCLE_VIEWMODEL_EXTENSIONS =
+                "androidx.lifecycle:lifecycle-extensions:${Versions.LIFECYCLE}"
             const val LIFECYCLE_VIEWMODEL =
                     "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.LIFECYCLE}"
             const val LIFECYCLE_RUNTIME =
@@ -62,7 +66,10 @@ object Dependencies {
     object Square {
 
         const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
-        const val MOSHI = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.MOSHI}"
+        const val MOSHI = "com.squareup.moshi:moshi-kotlin:${Versions.MOSHI}"
+        const val MOSHI_CODEGEN = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.MOSHI}"
+        const val MOSHI_ADAPTER = "com.squareup.moshi:moshi-adapters:${Versions.MOSHI}"
+
         const val MOSHI_CONVERTER =
                 "com.squareup.retrofit2:converter-moshi:${Versions.MOSHI_CONVERTER}"
         const val RETROFIT_JSON =
