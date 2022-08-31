@@ -1,12 +1,15 @@
 package com.slobodyanyuk.testprojectinfotech.di
 
 import com.slobodyanyuk.testprojectinfotech.base.Const.BASE_URL
+import com.slobodyanyuk.testprojectinfotech.data.repository.WeatherRepositoryImpl
 import com.slobodyanyuk.testprojectinfotech.data.source.remote.WeatherApi
 import com.slobodyanyuk.testprojectinfotech.domain.use_case.cities.CitiesUseCases
 import com.slobodyanyuk.testprojectinfotech.domain.use_case.cities.ClickOnCity
 import com.slobodyanyuk.testprojectinfotech.domain.use_case.cities.DownloadImage
 import com.slobodyanyuk.testprojectinfotech.domain.use_case.cities.OnRequestChanged
 import com.slobodyanyuk.testprojectinfotech.domain.use_case.cities.ParseCitiesFromJson
+import com.slobodyanyuk.testprojectinfotech.domain.use_case.city_details.CityDetailsUseCases
+import com.slobodyanyuk.testprojectinfotech.domain.use_case.city_details.LoadWeatherData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -57,4 +60,9 @@ object AppModule {
         onRequestChanged = OnRequestChanged()
     )
 
+    @Provides
+    @Singleton
+    fun provideCityDetailsUseCases(repository: WeatherRepositoryImpl) = CityDetailsUseCases(
+        loadWeatherData = LoadWeatherData(repository)
+    )
 }

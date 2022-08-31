@@ -1,25 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.city_detail.CityDetailFragment">
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/textview_second"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCityDetails"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@drawable/bg_weather_details">
 
-    <Button
-        android:id="@+id/button_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/mvCityDetails"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.33"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ProgressBar
+            android:id="@+id/pbCityDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvCityDetailsHumidityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/city_details_humidity_label"
+            android:textAppearance="@style/TextAppearance.20.White"
+            app:layout_constraintEnd_toEndOf="@+id/tvCityDetailsMinTempLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvCityDetailsMinTempLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsMinTemp" />
+
+        <TextView
+            android:id="@+id/tvCityDetailsHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.20.Blue"
+            app:layout_constraintEnd_toEndOf="@+id/tvCityDetailsHumidityLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvCityDetailsHumidityLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsHumidityLabel"
+            tools:text="25%" />
+
+
+        <TextView
+            android:id="@+id/tvCityDetailsWindSpeedLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:text="@string/city_details_wind_label"
+            android:textAppearance="@style/TextAppearance.20.White"
+            app:layout_constraintEnd_toEndOf="@+id/tvCityDetailsMaxTempLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvCityDetailsMaxTempLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsMaxTemp" />
+
+        <TextView
+            android:id="@+id/tvCityDetailsWindSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.20.Blue"
+            app:layout_constraintEnd_toEndOf="@+id/tvCityDetailsWindSpeedLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvCityDetailsWindSpeedLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsWindSpeedLabel"
+            tools:text="25°" />
+
+        <TextView
+            android:id="@+id/tvCityDetailsMinTempLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/city_details_min_temp_label"
+            android:textAppearance="@style/TextAppearance.20.White"
+            app:layout_constraintEnd_toStartOf="@+id/tvCityDetailsCurrentTemp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsCurrentTemp" />
+
+        <TextView
+            android:id="@+id/tvCityDetailsMinTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.20.Blue"
+            app:layout_constraintEnd_toEndOf="@+id/tvCityDetailsMinTempLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvCityDetailsMinTempLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsMinTempLabel"
+            tools:text="25°" />
+
+        <TextView
+            android:id="@+id/tvCityDetailsMaxTempLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/city_details_max_temp_label"
+            android:textAppearance="@style/TextAppearance.20.White"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvCityDetailsCurrentTemp"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsCurrentTemp" />
+
+        <TextView
+            android:id="@+id/tvCityDetailsMaxTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.20.Blue"
+            app:layout_constraintEnd_toEndOf="@+id/tvCityDetailsMaxTempLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvCityDetailsMaxTempLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsMaxTempLabel"
+            tools:text="25°" />
+
+        <TextView
+            android:id="@+id/tvCityDetailsName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="@style/TextAppearance.40.White"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.535"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="281dp"
+            tools:text=" Toronto " />
+
+        <TextView
+            android:id="@+id/tvCityDetailsDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.24.White"
+            app:layout_constraintEnd_toEndOf="@+id/tvCityDetailsName"
+            app:layout_constraintStart_toStartOf="@+id/tvCityDetailsName"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsName"
+            tools:text=" Clear Sky " />
+
+        <TextView
+            android:id="@+id/tvCityDetailsCurrentTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textAppearance="@style/TextAppearance.40.Blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCityDetailsDescription"
+            app:layout_constraintVertical_bias="0.25"
+            tools:text="25°" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/gCityDetailsWeatherInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tvCityDetailsHumidityLabel, tvCityDetailsHumidity, tvCityDetailsWindSpeedLabel, tvCityDetailsWindSpeed, tvCityDetailsMinTempLabel, tvCityDetailsMinTemp, tvCityDetailsMaxTempLabel, tvCityDetailsMaxTemp, tvCityDetailsDescription, tvCityDetailsCurrentTemp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

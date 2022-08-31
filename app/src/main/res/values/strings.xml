@@ -3,8 +3,19 @@
     <string name="cities_list_search_hint">City</string>
 
         <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
+    <!-- NAVIGATION -->
     <string name="fragment_cities_label">Cities</string>
     <string name="fragment_city_details_label">City Details</string>
+
+
+    <!--  CityDetails Screen -->
+    <string name="city_details_wind_label">Wind Speed: </string>
+    <string name="city_details_humidity_label">Humidity: </string>
+    <string name="city_details_min_temp_label">Min Temperature: </string>
+    <string name="city_details_max_temp_label">Max Temperature</string>
+
+    <!--  Formatters -->
+    <string name="humidity_formatter">%d\%%</string>
+    <string name="temperature_formatter">%d°</string>
 
 </resources>

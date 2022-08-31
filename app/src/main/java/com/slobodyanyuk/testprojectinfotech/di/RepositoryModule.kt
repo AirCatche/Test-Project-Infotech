@@ -2,8 +2,10 @@ package com.slobodyanyuk.testprojectinfotech.di
 
 import com.slobodyanyuk.testprojectinfotech.data.repository.CityRepositoryImpl
 import com.slobodyanyuk.testprojectinfotech.data.repository.ImageRepositoryImpl
+import com.slobodyanyuk.testprojectinfotech.data.repository.WeatherRepositoryImpl
 import com.slobodyanyuk.testprojectinfotech.domain.repository.CityRepository
 import com.slobodyanyuk.testprojectinfotech.domain.repository.ImageRepository
+import com.slobodyanyuk.testprojectinfotech.domain.repository.WeatherRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +27,10 @@ abstract class RepositoryModule {
     abstract fun bindAuthRepository(
         cityRepositoryImpl: CityRepositoryImpl
     ): CityRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindWeatherRepository(
+        weatherRepositoryImpl: WeatherRepositoryImpl
+    ): WeatherRepository
 }

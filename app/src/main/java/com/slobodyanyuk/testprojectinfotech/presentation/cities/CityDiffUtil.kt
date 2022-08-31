@@ -1,7 +1,7 @@
 package com.slobodyanyuk.testprojectinfotech.presentation.cities
 
 import androidx.recyclerview.widget.DiffUtil
-import com.slobodyanyuk.testprojectinfotech.domain.entity.ItemCity
+import com.slobodyanyuk.testprojectinfotech.domain.entity.cities.ItemCity
 
 class CityDiffUtil(
     private val oldList: List<ItemCity>,

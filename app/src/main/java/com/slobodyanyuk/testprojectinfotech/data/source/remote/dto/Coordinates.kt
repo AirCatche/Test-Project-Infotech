@@ -5,6 +5,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Coordinates(
-    @Json(name = "lon")val longitude: Double?,
-    @Json(name = "lat")val latitude: Double?
+    @Json(name = "lon") val longitude: Float?,
+    @Json(name = "lat") val latitude: Float?
 )

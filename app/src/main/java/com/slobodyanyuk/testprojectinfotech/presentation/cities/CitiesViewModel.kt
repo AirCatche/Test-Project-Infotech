@@ -1,14 +1,12 @@
 package com.slobodyanyuk.testprojectinfotech.presentation.cities
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.slobodyanyuk.testprojectinfotech.domain.entity.ItemCity
+import com.slobodyanyuk.testprojectinfotech.domain.entity.cities.ItemCity
 import com.slobodyanyuk.testprojectinfotech.domain.use_case.cities.CitiesUseCases
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -30,57 +28,79 @@ class CitiesViewModel @Inject constructor(
     private var _cityItems = MutableStateFlow<List<ItemCity>>(listOf())
     val cityItems = _cityItems.asStateFlow()
 
+    private var _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
     fun onEvent(event: CitiesEvent) {
         when (event) {
-            is CitiesEvent.OnCityClicked -> {
-                //TODO City Details(Implement navigation to city details screen)
-                event.cityId
-            }
             is CitiesEvent.SearchRequestChanged -> {
                 viewModelScope.launch {
+                    _isLoading.emit(true)
                     _citiesState = _citiesState.copy(searchedCityRequest = event.cityRequest)
                 }
 
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.Default) {
                     val filteredCities = citiesUseCases.onRequestChanged(
                         _citiesState.parsedCities,
                         event.cityRequest
                     )
                     _citiesState = _citiesState.copy(filteredCities = filteredCities)
-                    _cityItems.emit(
-                        filteredCities.map {
-                            ItemCity(it, _citiesState.bitmaps)
-                        }
-                    )
+                    val items = filteredCities.map {
+                        ItemCity(it, _citiesState.bitmaps)
+                    }
+                    _isLoading.emit(false)
+                    _cityItems.emit(items)
                 }
             }
 
             is CitiesEvent.InitDataLoading -> {
-                val parsedCities = viewModelScope.async {
-                    citiesUseCases.parseCitiesFromJson(event.jsonString, moshi)?.let { cities ->
-                        _citiesState = _citiesState.copy(parsedCities = cities)
-                        cities
+                if (_citiesState.searchedCityRequest.isNotBlank()) {
+                    viewModelScope.launch(Dispatchers.Default) {
+                        _isLoading.emit(true)
+                        val filteredCities = citiesUseCases.onRequestChanged(
+                            _citiesState.parsedCities,
+                            _citiesState.searchedCityRequest
+                        )
+                        _citiesState = _citiesState.copy(filteredCities = filteredCities)
+                        val items = filteredCities.map {
+                            ItemCity(it, _citiesState.bitmaps)
+                        }
+                        _cityItems.emit(items)
+                        _isLoading.emit(false)
                     }
-                }
-
-                val downloadedBitmaps = viewModelScope.async(Dispatchers.Default) {
-                    val evenBitmap = withContext(Dispatchers.Default) { // move to delegate for
-                        citiesUseCases.downloadBitmap(EVEN_IMAGE_URL)
-                    }
-                    val oddBitmap = withContext(Dispatchers.Default) {
-                        citiesUseCases.downloadBitmap(ODD_IMAGE_URL)
-                    }
-                    val bitmaps = evenBitmap to oddBitmap
-                    _citiesState = _citiesState.copy(bitmaps = bitmaps)
-                    bitmaps
-                }
-
-                viewModelScope.launch(Dispatchers.Main) {
-                    val cityItems = parsedCities.await()?.map {
-                        ItemCity(it, downloadedBitmaps.await())
-                    }
-                    cityItems?.let {
-                        _cityItems.emit(it)
+                } else {
+                    val time = System.currentTimeMillis()
+                    viewModelScope.launch {
+                        _isLoading.emit(true)
+                        val parsedCities = withContext(viewModelScope.coroutineContext) {
+                            citiesUseCases.parseCitiesFromJson(event.jsonString, moshi)
+                                    ?.let { cities ->
+                                        _citiesState = _citiesState.copy(parsedCities = cities)
+                                        cities
+                                    }
+                        }
+                        val downloadedBitmaps =
+                                withContext(viewModelScope.coroutineContext + Dispatchers.Default) {
+                                    val evenBitmap =
+                                            withContext(Dispatchers.Default) { // move to delegate for
+                                                citiesUseCases.downloadBitmap(EVEN_IMAGE_URL)
+                                            }
+                                    val oddBitmap = withContext(Dispatchers.Default) {
+                                        citiesUseCases.downloadBitmap(ODD_IMAGE_URL)
+                                    }
+                                    val bitmaps = evenBitmap to oddBitmap
+                                    _citiesState = _citiesState.copy(bitmaps = bitmaps)
+                                    bitmaps
+                                }
+                        viewModelScope.launch(Dispatchers.Main) {
+                            val cityItems = parsedCities?.map {
+                                ItemCity(it, downloadedBitmaps)
+                            }
+                            cityItems?.let {
+                                _cityItems.emit(it)
+                            }
+                        }
+                        _isLoading.emit(false)
                     }
                 }
             }

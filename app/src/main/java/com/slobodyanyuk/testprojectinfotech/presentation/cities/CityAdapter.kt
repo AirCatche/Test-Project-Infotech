@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.slobodyanyuk.testprojectinfotech.databinding.ItemCityBinding
-import com.slobodyanyuk.testprojectinfotech.domain.entity.ItemCity
+import com.slobodyanyuk.testprojectinfotech.domain.entity.cities.ItemCity
 
 class CityAdapter(
     var cityItems: List<ItemCity>,
-    val onCityClicked: (Int) -> Unit,
+    val onCityClicked: (Int, String) -> Unit,
 ) : RecyclerView.Adapter<CityAdapter.ItemCityViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemCityViewHolder =
@@ -24,7 +24,8 @@ class CityAdapter(
 
     override fun onBindViewHolder(holder: ItemCityViewHolder, position: Int) {
         holder.binding.root.setOnClickListener {
-            cityItems[position].city.id.let { onCityClicked(it) }
+            val city = cityItems[position].city
+            onCityClicked(city.id, city.name)
         }
         holder.binding.tvCitiesName.text = cityItems[position].city.name
         holder.binding.ivCitiesPicture.setImageBitmap(getBitmapForCity(position))
