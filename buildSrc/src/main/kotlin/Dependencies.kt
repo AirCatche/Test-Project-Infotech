@@ -80,4 +80,9 @@ object Dependencies {
 
         const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
     }
+
+    object Google {
+
+        const val MAP = "com.google.android.gms:play-services-maps:${Versions.MAP}"
+    }
 }

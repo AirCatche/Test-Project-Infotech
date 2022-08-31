@@ -32,7 +32,7 @@ class CityDetailViewModel @Inject constructor(
                 viewModelScope.launch {
                     _isLoading.emit(true)
                     when (val result =
-                            cityDetailsUseCases.loadWeatherData(event.cityId, Const.API_KEY)) {
+                            cityDetailsUseCases.loadWeatherData(event.cityId, Const.OPEN_WEATHER_API_KEY)) {
                         is Resource.Success -> {
                             _cityDetailsState = _cityDetailsState.copy(
                                 weatherInfo = result.data,

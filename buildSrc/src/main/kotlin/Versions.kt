@@ -22,6 +22,8 @@ object Versions {
     const val MOSHI = "1.13.0"
     const val MOSHI_CONVERTER = "2.4.0"
     const val GLIDE = "4.13.0"
+    const val MAP = "18.1.0"
+    const val PLUGIN_SECRETS = "2.0.1"
 
     const val J_UNIT = "1.1.3"
     const val ESPRESSO = "3.4.0"

@@ -4,7 +4,8 @@ plugins {
     kotlin("kapt")
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
-    id ("dagger.hilt.android.plugin")
+    id("dagger.hilt.android.plugin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -27,22 +28,22 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
         getByName("debug") {
             isMinifyEnabled = false
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
     // Temporary fix until alpha10
     packagingOptions {
-        resources.excludes.add ("META-INF/proguard/androidx-annotations.pro")
-        resources.excludes.add ("META-INF/gradle/incremental.annotation.processors")
+        resources.excludes.add("META-INF/proguard/androidx-annotations.pro")
+        resources.excludes.add("META-INF/gradle/incremental.annotation.processors")
 
     }
     compileOptions {
@@ -66,6 +67,7 @@ dependencies {
     kapt(Dependencies.Dagger.DAGGER_HILT_COMPILER_X)
     implementation(Dependencies.Dagger.DAGGER_HILT_COMPOSE)
     implementation(Dependencies.Glide.GLIDE)
+    implementation(Dependencies.Google.MAP)
     implementation(Dependencies.Square.MOSHI)
     kapt(Dependencies.Square.MOSHI_CODEGEN)
     implementation(Dependencies.Square.MOSHI_ADAPTER)
@@ -79,7 +81,6 @@ dependencies {
     implementation(Dependencies.AndroidX.Ktx.CORE)
     implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_ANNOTATIONS)
     implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_VIEWMODEL)
-  //  implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_VIEWMODEL_EXTENSIONS)
     implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_RUNTIME)
     implementation(Dependencies.AndroidX.Ktx.FRAGMENT)
     implementation(Dependencies.AndroidX.Ktx.Navigation.FRAGMENT)

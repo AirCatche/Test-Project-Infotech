@@ -22,18 +22,27 @@
         android:name="com.slobodyanyuk.testprojectinfotech.presentation.city_detail.CityDetailFragment"
         android:label="@string/fragment_city_details_label"
         tools:layout="@layout/fragment_city_details">
-        <argument
-            android:name="cityId"
-            app:argType="integer"
-            android:defaultValue="0"/>
-        <argument
-            android:name="cityName"
-            app:argType="string"
-            android:defaultValue="City"/>
+
         <action
             android:id="@+id/action_CityDetails_to_Cities"
             app:destination="@id/CitiesFragment" />
+        <argument
+            android:name="longitude"
+            android:defaultValue="0.0"
+            app:argType="float" />
+        <argument
+            android:name="latitude"
+            android:defaultValue="0.0"
+            app:argType="float" />
+        <argument
+            android:name="cityId"
+            android:defaultValue="0"
+            app:argType="integer" />
 
+        <argument
+            android:name="cityName"
+            android:defaultValue="City"
+            app:argType="string" />
     </fragment>
 
 </navigation>

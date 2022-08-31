@@ -36,10 +36,15 @@ class CitiesFragment : BaseFragment<FragmentCitiesBinding>(
     private val cityAdapter by lazy {
         CityAdapter(
             listOf(),
-        ) { cityId, cityName ->
+        ) { cityId, cityName, lng, lat ->
             findNavController(requireView()).navigate(
                 R.id.action_Cities_to_CityDetails,
-                bundleOf("cityId" to cityId, "cityName" to cityName)
+                bundleOf(
+                    CITY_ID to cityId,
+                    CITY_NAME to cityName,
+                    LONGITUDE to lng,
+                    LATITUDE to lat
+                )
             )
         }
     }
@@ -91,5 +96,10 @@ class CitiesFragment : BaseFragment<FragmentCitiesBinding>(
     companion object {
 
         const val JSON_FILE_NAME = "city_list.json"
+
+        const val CITY_ID = "cityId"
+        const val CITY_NAME = "cityName"
+        const val LONGITUDE = "longitude"
+        const val LATITUDE = "latitude"
     }
 }

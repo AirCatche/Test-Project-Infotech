@@ -3,7 +3,7 @@
 
     <style name="TextAppearance" parent="" />
 
-<!--    Text Size-->
+    <!--    Text Size-->
     <style name="TextAppearance.10">
         <item name="android:textSize">10sp</item>
     </style>
@@ -43,7 +43,11 @@
     <style name="TextAppearance.40">
         <item name="android:textSize">40sp</item>
     </style>
-<!--Text Color-->
+
+    <style name="TextAppearance.100">
+        <item name="android:textSize">100sp</item>
+    </style>
+    <!--Text Color-->
 
     <style name="TextAppearance.16.White">
         <item name="android:textColor">@android:color/white</item>
@@ -64,7 +68,11 @@
     <style name="TextAppearance.40.White">
         <item name="android:textColor">@android:color/white</item>
     </style>
-    🔥
+
+    <style name="TextAppearance.100.Blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
     <style name="TextAppearance.40.Blue">
         <item name="android:textColor">@color/blue</item>
     </style>

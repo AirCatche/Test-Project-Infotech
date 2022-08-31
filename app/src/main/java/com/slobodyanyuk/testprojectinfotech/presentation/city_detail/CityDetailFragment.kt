@@ -5,6 +5,10 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.slobodyanyuk.testprojectinfotech.R
 import com.slobodyanyuk.testprojectinfotech.base.BaseFragment
 import com.slobodyanyuk.testprojectinfotech.base.extension.launchWhenStarted
@@ -34,12 +38,25 @@ class CityDetailFragment : BaseFragment<FragmentCityDetailsBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvCityDetailsName.text = arguments?.getString(CITY_NAME, "")
-        viewModel.onEvent(
-            CityDetailsEvent.LoadWeatherInfo(
-                cityId = arguments?.getInt(CITY_ID, 0) ?: 0
-            )
-        )
+        setupMap()
         setupObservers()
+        viewModel.onEvent(
+            CityDetailsEvent.LoadWeatherInfo(cityId = arguments?.getInt(CITY_ID, 0) ?: 0)
+        )
+    }
+
+    private fun setupMap() {
+        (childFragmentManager.findFragmentById(R.id.mapCityDetails) as SupportMapFragment).getMapAsync { map ->
+            arguments?.let {
+                val lng = it.getFloat(LATITUDE, 0f).toDouble()
+                val lat = it.getFloat(LONGITUDE, 0f).toDouble()
+                val name = it.getString(CITY_NAME, "")
+                val coords = LatLng(lat, lng)
+
+                map.addMarker(MarkerOptions().position(coords).title(name))
+                map.moveCamera(CameraUpdateFactory.newLatLng(coords))
+            }
+        }
     }
 
     private fun setupObservers() {
@@ -65,5 +82,7 @@ class CityDetailFragment : BaseFragment<FragmentCityDetailsBinding>(
 
         const val CITY_ID = "cityId"
         const val CITY_NAME = "cityName"
+        const val LONGITUDE = "longitude"
+        const val LATITUDE = "latitude"
     }
 }

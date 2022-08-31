@@ -10,7 +10,7 @@ import com.slobodyanyuk.testprojectinfotech.domain.entity.cities.ItemCity
 
 class CityAdapter(
     var cityItems: List<ItemCity>,
-    val onCityClicked: (Int, String) -> Unit,
+    val onCityClicked: (Int, String, Float?, Float?) -> Unit,
 ) : RecyclerView.Adapter<CityAdapter.ItemCityViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemCityViewHolder =
@@ -25,7 +25,7 @@ class CityAdapter(
     override fun onBindViewHolder(holder: ItemCityViewHolder, position: Int) {
         holder.binding.root.setOnClickListener {
             val city = cityItems[position].city
-            onCityClicked(city.id, city.name)
+            onCityClicked(city.id, city.name, city.coord?.latitude, city.coord?.longitude)
         }
         holder.binding.tvCitiesName.text = cityItems[position].city.name
         holder.binding.ivCitiesPicture.setImageBitmap(getBitmapForCity(position))
