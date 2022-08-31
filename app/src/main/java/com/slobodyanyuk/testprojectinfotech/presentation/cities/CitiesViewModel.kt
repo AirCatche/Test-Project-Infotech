@@ -1,7 +1,9 @@
 package com.slobodyanyuk.testprojectinfotech.presentation.cities
 
+import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.slobodyanyuk.testprojectinfotech.data.source.local.CityImagesCache
 import com.slobodyanyuk.testprojectinfotech.domain.entity.cities.ItemCity
 import com.slobodyanyuk.testprojectinfotech.domain.use_case.cities.CitiesUseCases
 import com.squareup.moshi.Moshi
@@ -54,6 +56,11 @@ class CitiesViewModel @Inject constructor(
             }
 
             is CitiesEvent.InitDataLoading -> {
+                val cachedImages = getCachedImages(
+                    CityImagesCache.cache[EVEN_IMAGE_CACHE],
+                    CityImagesCache.cache[ODD_IMAGE_CACHE]
+                )
+
                 if (_citiesState.searchedCityRequest.isNotBlank()) {
                     viewModelScope.launch(Dispatchers.Default) {
                         _isLoading.emit(true)
@@ -69,7 +76,6 @@ class CitiesViewModel @Inject constructor(
                         _isLoading.emit(false)
                     }
                 } else {
-                    val time = System.currentTimeMillis()
                     viewModelScope.launch {
                         _isLoading.emit(true)
                         val parsedCities = withContext(viewModelScope.coroutineContext) {
@@ -79,19 +85,21 @@ class CitiesViewModel @Inject constructor(
                                         cities
                                     }
                         }
-                        val downloadedBitmaps =
-                                withContext(viewModelScope.coroutineContext + Dispatchers.Default) {
-                                    val evenBitmap =
-                                            withContext(Dispatchers.Default) { // move to delegate for
-                                                citiesUseCases.downloadBitmap(EVEN_IMAGE_URL)
-                                            }
-                                    val oddBitmap = withContext(Dispatchers.Default) {
-                                        citiesUseCases.downloadBitmap(ODD_IMAGE_URL)
-                                    }
-                                    val bitmaps = evenBitmap to oddBitmap
-                                    _citiesState = _citiesState.copy(bitmaps = bitmaps)
-                                    bitmaps
+                        val downloadedBitmaps = cachedImages
+                            ?: withContext(viewModelScope.coroutineContext + Dispatchers.Default) {
+                                val evenBitmap =
+                                        withContext(Dispatchers.Default) { // move to delegate for
+                                            citiesUseCases.downloadBitmap(EVEN_IMAGE_URL)
+                                        }
+                                val oddBitmap = withContext(Dispatchers.Default) {
+                                    citiesUseCases.downloadBitmap(ODD_IMAGE_URL)
                                 }
+                                val bitmaps = evenBitmap to oddBitmap
+                                _citiesState = _citiesState.copy(bitmaps = bitmaps)
+                                saveOddBitmapToCache(oddBitmap)
+                                saveEvenBitmapToCache(evenBitmap)
+                                bitmaps
+                            }
                         viewModelScope.launch(Dispatchers.Main) {
                             val cityItems = parsedCities?.map {
                                 ItemCity(it, downloadedBitmaps)
@@ -107,9 +115,25 @@ class CitiesViewModel @Inject constructor(
         }
     }
 
+    private fun saveOddBitmapToCache(bitmap: Bitmap?) = bitmap?.let {
+        CityImagesCache.cache[ODD_IMAGE_CACHE] = it
+    }
+
+    private fun saveEvenBitmapToCache(bitmap: Bitmap?) = bitmap?.let {
+        CityImagesCache.cache[EVEN_IMAGE_CACHE] = bitmap
+    }
+
+    private fun getCachedImages(evenBitmap: Bitmap?, oddBitmap: Bitmap?): Pair<Bitmap, Bitmap>? =
+            if (evenBitmap != null && oddBitmap != null) {
+                evenBitmap to oddBitmap
+            } else null
+
     companion object {
 
         const val ODD_IMAGE_URL = "https://infotech.gov.ua/storage/img/Temp1.png"
         const val EVEN_IMAGE_URL = "https://infotech.gov.ua/storage/img/Temp3.png"
+
+        const val ODD_IMAGE_CACHE = "odd image cache"
+        const val EVEN_IMAGE_CACHE = "even image cache"
     }
 }

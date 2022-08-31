@@ -2,7 +2,6 @@ package com.slobodyanyuk.testprojectinfotech.presentation.city_detail
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,9 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import visible
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 @AndroidEntryPoint
 class CityDetailFragment : BaseFragment<FragmentCityDetailsBinding>(
     FragmentCityDetailsBinding::inflate,

@@ -1,11 +1,9 @@
 package com.slobodyanyuk.testprojectinfotech.presentation.cities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation.findNavController
@@ -21,9 +19,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.onEach
 import visible
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 @AndroidEntryPoint
 class CitiesFragment : BaseFragment<FragmentCitiesBinding>(
     FragmentCitiesBinding::inflate,
@@ -51,7 +46,6 @@ class CitiesFragment : BaseFragment<FragmentCitiesBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("TAGTAG", "onViewCreated: ")
 
         binding.apply {
             rvCities.apply {
