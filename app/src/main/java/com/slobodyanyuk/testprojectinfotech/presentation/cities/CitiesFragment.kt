@@ -13,9 +13,10 @@ import com.slobodyanyuk.testprojectinfotech.base.BaseFragment
 import com.slobodyanyuk.testprojectinfotech.base.extension.getStringFromAssetsJson
 import com.slobodyanyuk.testprojectinfotech.base.extension.launchWhenStarted
 import com.slobodyanyuk.testprojectinfotech.databinding.FragmentCitiesBinding
-import com.slobodyanyuk.testprojectinfotech.domain.entity.cities.ItemCity
 import dagger.hilt.android.AndroidEntryPoint
+import invisible
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.onEach
 import visible
 
@@ -47,37 +48,43 @@ class CitiesFragment : BaseFragment<FragmentCitiesBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupObservers()
+
         binding.apply {
             rvCities.apply {
                 layoutManager = LinearLayoutManager(requireContext())
+                //   viewModel.citiesState.filteredCities.let { cityAdapter.setData() }
                 adapter = this@CitiesFragment.cityAdapter
             }
             binding.etCitiesSearch.text?.clear()
             etCitiesSearch.doAfterTextChanged {
-                viewModel.onEvent(CitiesEvent.SearchRequestChanged(etCitiesSearch.text.toString()))
+                viewModel.onEvent(
+                    CitiesEvent.SearchRequestChanged(
+                        etCitiesSearch.text.toString().trim()
+                    )
+                )
             }
         }
 
-        viewModel.onEvent(CitiesEvent.InitDataLoading(jsonCitiesString))
-
-        setupObservers()
+        viewModel.onEvent(CitiesEvent.InitScreenData(jsonCitiesString))
     }
 
     private fun setupObservers() {
-        viewModel.cityRequest.onEach { request ->
-            cityAdapter.setData(
-                viewModel.citiesState.filteredCities.map { city ->
-                    ItemCity(city, viewModel.citiesState.bitmaps)
-                }
-            )
+
+        viewModel.filteredCityItems.debounce(400L).onEach { items ->
+            if (!(items.isEmpty()
+                        .and(viewModel.citiesState.searchedCityRequest.isBlank()))
+            ) { // in order to prevent setting default value with empty items after parsing city
+                cityAdapter.setData(items)
+            }
         }.launchWhenStarted(lifecycleScope)
 
-        viewModel.cityItems.debounce(500L).onEach { items ->
+        viewModel.parsedCityItems.drop(1).onEach { items ->
             cityAdapter.setData(items)
         }.launchWhenStarted(lifecycleScope)
 
         viewModel.isLoading.onEach {
-            binding.rvCities.visible(!it)
+            binding.rvCities.invisible(it)
             binding.pbCities.visible(it)
         }.launchWhenStarted(lifecycleScope)
     }

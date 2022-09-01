@@ -1,9 +1,8 @@
 package com.slobodyanyuk.testprojectinfotech.domain.use_case.cities
 
-import com.slobodyanyuk.testprojectinfotech.data.source.remote.ImageDownloaderService
-import com.slobodyanyuk.testprojectinfotech.domain.ImageDownloaderDelegate
+import com.slobodyanyuk.testprojectinfotech.domain.repository.ImageRepository
 
-class DownloadImage: ImageDownloaderService by ImageDownloaderDelegate() {
+class DownloadImage(private val repository: ImageRepository) {
 
-    suspend operator fun invoke(url: String) = getBitmapFromUrl(url)
+    suspend operator fun invoke(url: String) = repository.getBitmapFromUrl(url)
 }

@@ -57,6 +57,10 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="TextAppearance.20.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
     <style name="TextAppearance.24.White">
         <item name="android:textColor">@android:color/white</item>
     </style>

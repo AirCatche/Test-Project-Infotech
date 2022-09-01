@@ -4,5 +4,5 @@ import android.graphics.Bitmap
 
 interface ImageDownloaderService {
 
-    suspend fun getBitmapFromUrl(url: String): Bitmap?
+    suspend fun getBitmapWithUrl(url: String): Bitmap?
 }

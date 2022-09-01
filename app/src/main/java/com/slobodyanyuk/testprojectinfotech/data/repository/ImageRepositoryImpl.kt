@@ -9,6 +9,5 @@ import javax.inject.Inject
 class ImageRepositoryImpl @Inject constructor() : ImageRepository,
     ImageDownloaderService by ImageDownloaderDelegate() {
 
-    override suspend fun getBitmapFromUrl(url: String): Bitmap? =
-            this@ImageRepositoryImpl.getBitmapFromUrl(url)
+    override suspend fun getBitmapFromUrl(url: String): Bitmap? = getBitmapWithUrl(url)
 }

@@ -1,6 +1,5 @@
 package com.slobodyanyuk.testprojectinfotech.presentation.cities
 
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -28,16 +27,10 @@ class CityAdapter(
             onCityClicked(city.id, city.name, city.coord?.latitude, city.coord?.longitude)
         }
         holder.binding.tvCitiesName.text = cityItems[position].city.name
-        holder.binding.ivCitiesPicture.setImageBitmap(getBitmapForCity(position))
+        holder.binding.ivCitiesPicture.setImageBitmap(cityItems[position].bitmapImage)
     }
 
     override fun getItemCount(): Int = cityItems.size
-
-    private fun getBitmapForCity(position: Int): Bitmap? = if (position % 2 == 0) {
-        cityItems[position].bitmapImage.first
-    } else {
-        cityItems[position].bitmapImage.second
-    }
 
     class ItemCityViewHolder(val binding: ItemCityBinding) : RecyclerView.ViewHolder(binding.root)
 

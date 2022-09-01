@@ -24,5 +24,4 @@ class CityDiffUtil(
         oldList[oldItemPosition].bitmapImage != newList[newItemPosition].bitmapImage -> false
         else -> true
     }
-    // TODO Improvement (Implement payload for correct work and avoiding blinking)
 }

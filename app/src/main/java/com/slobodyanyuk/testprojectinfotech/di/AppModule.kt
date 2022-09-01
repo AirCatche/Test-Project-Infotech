@@ -1,6 +1,8 @@
 package com.slobodyanyuk.testprojectinfotech.di
 
 import com.slobodyanyuk.testprojectinfotech.base.Const.BASE_URL
+import com.slobodyanyuk.testprojectinfotech.data.repository.CityRepositoryImpl
+import com.slobodyanyuk.testprojectinfotech.data.repository.ImageRepositoryImpl
 import com.slobodyanyuk.testprojectinfotech.data.repository.WeatherRepositoryImpl
 import com.slobodyanyuk.testprojectinfotech.data.source.remote.WeatherApi
 import com.slobodyanyuk.testprojectinfotech.domain.use_case.cities.CitiesUseCases
@@ -53,10 +55,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCitiesUseCases() = CitiesUseCases(
+    fun provideCitiesUseCases(
+        cityRepository: CityRepositoryImpl,
+        imageRepository: ImageRepositoryImpl,
+    ) = CitiesUseCases(
         clickOnCity = ClickOnCity(),
-        downloadBitmap = DownloadImage(),
-        parseCitiesFromJson = ParseCitiesFromJson(),
+        downloadBitmap = DownloadImage(imageRepository),
+        parseCitiesFromJson = ParseCitiesFromJson(cityRepository),
         onRequestChanged = OnRequestChanged()
     )
 

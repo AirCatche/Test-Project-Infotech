@@ -18,13 +18,13 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindUserRepository(
+    abstract fun bindImageRepository(
         imageRepositoryImpl: ImageRepositoryImpl
     ): ImageRepository
 
     @Binds
     @Singleton
-    abstract fun bindAuthRepository(
+    abstract fun bindCityRepository(
         cityRepositoryImpl: CityRepositoryImpl
     ): CityRepository
 

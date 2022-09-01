@@ -2,10 +2,10 @@ package com.slobodyanyuk.testprojectinfotech.domain.use_case.cities
 
 import com.slobodyanyuk.testprojectinfotech.data.source.remote.CitiesJsonParserService
 import com.slobodyanyuk.testprojectinfotech.domain.CitiesJsonParserDelegate
-import com.squareup.moshi.Moshi
+import com.slobodyanyuk.testprojectinfotech.domain.repository.CityRepository
 
-class ParseCitiesFromJson: CitiesJsonParserService by CitiesJsonParserDelegate() {
+class ParseCitiesFromJson(private val repository: CityRepository) :
+    CitiesJsonParserService by CitiesJsonParserDelegate() {
 
-    suspend operator fun invoke(jsonString: String, moshi: Moshi) = parseToCities(jsonString, moshi)
-
+    suspend operator fun invoke(jsonString: String) = repository.getCities(jsonString)
 }

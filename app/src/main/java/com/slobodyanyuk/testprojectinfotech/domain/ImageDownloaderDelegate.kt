@@ -9,7 +9,7 @@ import java.net.URL
 
 class ImageDownloaderDelegate : ImageDownloaderService {
 
-    override suspend fun getBitmapFromUrl(url: String): Bitmap? =
+    override suspend fun getBitmapWithUrl(url: String): Bitmap? =
             loadImageFromUrl(url)
 
     private suspend fun loadImageFromUrl(urlString: String): Bitmap? = try {

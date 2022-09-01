@@ -5,5 +5,5 @@ import com.slobodyanyuk.testprojectinfotech.data.source.remote.dto.City
 
 data class ItemCity(
     val city: City,
-    val bitmapImage: Pair<Bitmap?, Bitmap?>,
+    val bitmapImage: Bitmap?,
 )
